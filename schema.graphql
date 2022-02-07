@@ -1,6 +1,32 @@
-type ExampleEntity @entity {
+type _Schema_
+  @fulltext(
+    name: "messageSearch"
+    language: en
+    algorithm: rank
+    include: [
+      {
+        entity: "Message"
+        fields: [{ name: "_sender" }, { name: "_receiver" }]
+      }
+    ]
+  )
+
+type Message @entity {
   id: ID!
-  count: BigInt!
-  receiver: Bytes! # address
-  uri: String! # string
+  _receiver: String! # uint256
+  _uri: String! # address
+  _timestamp: BigInt! # uint256
+  _sender: String! # uint256
+  _thread_id: BigInt! # uint256
+}
+
+type Thread @entity {
+  id: ID!
+  _receiver: Bytes!
+  _sender: Bytes!
+  _thread_id: BigInt!
+  _timestamp: BigInt!
+  _sender_key: String!
+  _receiver_key: String!
+  encrypted: Boolean!
 }
