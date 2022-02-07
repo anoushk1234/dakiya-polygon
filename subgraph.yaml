@@ -1,0 +1,26 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Messaging
+    network: matic
+    source:
+      address: "0x4995ff34079D59A0dfD345Dc95145f0159Fd6C1E"
+      abi: Messaging
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - MessageSent
+        - ThreadCreated
+      abis:
+        - name: Messaging
+          file: ./abis/Messaging.json
+      eventHandlers:
+        - event: MessageSent(address,string,uint256,address,uint256)
+          handler: handleMessageSent
+        - event: ThreadCreated(address,address,uint256,uint256,string,string,bool)
+          handler: handleThreadCreated
+      file: ./src/mapping.ts
